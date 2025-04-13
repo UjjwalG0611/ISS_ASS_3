@@ -1248,5 +1248,201 @@ document.addEventListener('DOMContentLoaded', () => {
     new EventTracker();
 });
     </script>
+    <section id="text-analysis" class="text-analysis">
+        <div class="container">
+            <div class="section-title">
+                <h2>Text Analysis</h2>
+            </div>
+            <div class="analysis-container">
+                <textarea id="textInput" class="text-input" 
+                    placeholder="Enter your review (minimum 10000 words)..." 
+                    rows="10"></textarea>
+                <button onclick="analyzeText()" class="btn">Analyze Text</button>
+                
+                <div class="results-container">
+                    <div class="basic-stats">
+                        <h3>Basic Statistics</h3>
+                        <div id="basicStats"></div>
+                    </div>
+                    
+                    <div class="word-categories">
+                        <div class="category">
+                            <h3>Pronouns</h3>
+                            <div id="pronounStats"></div>
+                        </div>
+                        
+                        <div class="category">
+                            <h3>Prepositions</h3>
+                            <div id="prepositionStats"></div>
+                        </div>
+                        
+                        <div class="category">
+                            <h3>Articles</h3>
+                            <div id="articleStats"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .text-analysis {
+            padding: 50px 0;
+            background: var(--bg-dark);
+            color: var(--text-color);
+        }
+
+        .analysis-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--text-color);
+            border-radius: 5px;
+            background: var(--bg-lighter);
+            color: var(--text-bright);
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .results-container {
+            margin-top: 30px;
+        }
+
+        .word-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .category {
+            background: var(--bg-lighter);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+
+    <script>
+class TextAnalyzer {
+    constructor() {
+        this.pronouns = new Set([
+            'i', 'me', 'my', 'mine', 'myself',
+            'you', 'your', 'yours', 'yourself',
+            'he', 'him', 'his', 'himself',
+            'she', 'her', 'hers', 'herself',
+            'it', 'its', 'itself',
+            'we', 'us', 'our', 'ours', 'ourselves',
+            'they', 'them', 'their', 'theirs', 'themselves'
+        ]);
+
+        this.prepositions = new Set([
+            'about', 'above', 'across', 'after', 'against', 'along', 'among', 'around',
+            'at', 'before', 'behind', 'below', 'beneath', 'beside', 'between', 'beyond',
+            'by', 'down', 'during', 'except', 'for', 'from', 'in', 'inside', 'into',
+            'like', 'near', 'of', 'off', 'on', 'out', 'outside', 'over', 'past',
+            'through', 'throughout', 'to', 'toward', 'under', 'underneath', 'until',
+            'up', 'upon', 'with', 'within', 'without'
+        ]);
+
+        this.articles = new Set(['a', 'an', 'the']);
+    }
+
+    analyze(text) {
+        const stats = this.getBasicStats(text);
+        const wordStats = this.getWordStats(text);
+        return { ...stats, ...wordStats };
+    }
+
+    getBasicStats(text) {
+        return {
+            letters: (text.match(/[a-zA-Z]/g) || []).length,
+            words: text.trim().split(/\s+/).length,
+            spaces: (text.match(/\s/g) || []).length,
+            newlines: (text.match(/\n/g) || []).length,
+            specialSymbols: (text.match(/[^a-zA-Z0-9\s]/g) || []).length
+        };
+    }
+
+    getWordStats(text) {
+        const words = text.toLowerCase().match(/\b\w+\b/g) || [];
+        const pronounCount = {};
+        const prepositionCount = {};
+        const articleCount = {};
+
+        words.forEach(word => {
+            if (this.pronouns.has(word)) {
+                pronounCount[word] = (pronounCount[word] || 0) + 1;
+            }
+            if (this.prepositions.has(word)) {
+                prepositionCount[word] = (prepositionCount[word] || 0) + 1;
+            }
+            if (this.articles.has(word)) {
+                articleCount[word] = (articleCount[word] || 0) + 1;
+            }
+        });
+
+        return {
+            pronouns: pronounCount,
+            prepositions: prepositionCount,
+            articles: articleCount
+        };
+    }
+}
+
+function displayResults(results) {
+    // Display basic stats
+    const basicStatsHtml = `
+        <div class="stat-item"><span>Letters:</span> <span>${results.letters}</span></div>
+        <div class="stat-item"><span>Words:</span> <span>${results.words}</span></div>
+        <div class="stat-item"><span>Spaces:</span> <span>${results.spaces}</span></div>
+        <div class="stat-item"><span>Newlines:</span> <span>${results.newlines}</span></div>
+        <div class="stat-item"><span>Special Symbols:</span> <span>${results.specialSymbols}</span></div>
+    `;
+    document.getElementById('basicStats').innerHTML = basicStatsHtml;
+
+    // Display pronouns
+    const pronounsHtml = Object.entries(results.pronouns)
+        .map(([pronoun, count]) => `<div class="stat-item"><span>${pronoun}:</span> <span>${count}</span></div>`)
+        .join('');
+    document.getElementById('pronounStats').innerHTML = pronounsHtml || 'No pronouns found';
+
+    // Display prepositions
+    const prepositionsHtml = Object.entries(results.prepositions)
+        .map(([prep, count]) => `<div class="stat-item"><span>${prep}:</span> <span>${count}</span></div>`)
+        .join('');
+    document.getElementById('prepositionStats').innerHTML = prepositionsHtml || 'No prepositions found';
+
+    // Display articles
+    const articlesHtml = Object.entries(results.articles)
+        .map(([article, count]) => `<div class="stat-item"><span>${article}:</span> <span>${count}</span></div>`)
+        .join('');
+    document.getElementById('articleStats').innerHTML = articlesHtml || 'No articles found';
+}
+
+function analyzeText() {
+    const text = document.getElementById('textInput').value;
+    if (text.split(/\s+/).length < 10) {
+        alert('Please enter at least 10 words for analysis');
+        return;
+    }
+    
+    const analyzer = new TextAnalyzer();
+    const results = analyzer.analyze(text);
+    displayResults(results);
+}
+    </script>
 </body>
 </html>
