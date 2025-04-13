@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujjwal Gupta - Personal Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00ff9d;
+            --secondary-color: #00b377;
+            --dark-color: #0a192f;
+            --light-color: #112240;
+            --text-color: #8892b0;
+            --text-bright: #ccd6f6;
+            --text-highlight: #64ffda;
+            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            --bg-dark: #0a192f;
+            --bg-lighter: #112240;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(30, 41, 59, 0.8), rgba(30, 41, 59, 0.8)),
+                        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920');
+            background-attachment: fixed;
+            background-size: cover;
+            color: white;
+            text-align: center;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInDown 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s 0.5s both;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--gradient);
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transform-origin: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-outline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--gradient);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+        
+        .btn-outline:hover::before {
+            width: 100%;
+        }
+        
+        section {
+            background-color: var(--bg-dark);
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+            color: var(--text-bright);
+        }
+        
+        .section-title h2::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            bottom: -10px;
+            left: 0;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+        
+        .about {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .about-img {
+            flex: 1;
+            margin-right: 50px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .profile-img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 0 0 8px rgba(99, 102, 241, 0.2);
+            transition: var(--transition);
+        }
+        
+        .profile-img:hover {
+            transform: scale(1.05) rotate(3deg);
+            box-shadow: 0 0 0 12px rgba(99, 102, 241, 0.2);
+        }
+        
+        .about-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-content h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .hometown {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .gallery-item {
+            width: 300px;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 15px;
+            color: white;
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .education {
+            background-color: #f9f9f9;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 50px auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: var(--gradient);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 50px;
+            position: relative;
+            width: 50%;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s both;
+            opacity: 0;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--gradient);
+            border: none;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: -14px;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -14px;
+        }
+        
+        .timeline-img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-img {
+            float: right;
+            margin-left: 20px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-img {
+            float: left;
+            margin-right: 20px;
+        }
+        
+        .timeline-content h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .timeline-content p {
+            margin-bottom: 10px;
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+        
+        .skills {
+            background-color: white;
+        }
+        
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+        
+        .skill-category {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            padding: 25px;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+        
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .skill-category h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .skill-category h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .skill-bar {
+            margin-bottom: 20px;
+        }
+        
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .skill-level {
+            height: 10px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .skill-percent {
+            height: 100%;
+            background: var(--gradient);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+            animation: slideIn 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hobbies {
+            background-color: #f9f9f9;
+        }
+        
+        .sports-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .sport-card {
+            width: 250px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .sport-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sport-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        .sport-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .sport-info h3 {
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .slider-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .slide img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+        }
+        
+        .slider-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        .slider-btn {
+            background-color: rgba(255, 255, 255, 0.6);
+            color: var(--dark-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 0 20px;
+        }
+        
+        .slider-btn:hover {
+            background-color: white;
+        }
+        
+        .dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .dot.active {
+            background-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            color: white;
+            font-size: 20px;
+            transition: var(--transition);
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .footer-links {
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            font-size: 14px;
+            color: #aaa;
+            margin-top: 20px;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                width: 0;
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Media Queries */
+        @media screen and (max-width: 991px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background-color: var(--dark-color);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .about {
+                flex-direction: column;
+            }
+            
+            .about-img {
+                margin-right: 0;
+                margin-bottom: 30px;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(odd) {
+                left: 0;
+                text-align: left;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 15px;
+            }
+            
+            .timeline-item:nth-child(odd)::after {
+                right: auto;
+                left: 15px;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-img {
+                float: left;
+                margin-left: 0;
+                margin-right: 20px;
+            }
+        }
+        
+        @media screen and (max-width: 767px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .profile-img {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .gallery-item {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .slider-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+                margin: 0 10px;
+            }
+            
+            .slide img {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">Profile.</a>
+                <div class="hamburger" id="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#hometown">Hometown</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Ujjwal Gupta</h1>
+            <p>Student at IIIT Hyderabad</p>
+            <a href="file:///home/ujjwal-gupta/Downloads/Assignment_3.pdf" class="btn" download>Download CV</a>
+            <a href="#about" class="btn btn-outline">Learn More</a>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Me</h2>
+            </div>
+            <div class="about">
+                <div class="about-img">
+                    <img src="Ujjwal_Gupta.jpg" alt="Ujjwal Gupta" class="profile-img">
+                </div>
+                <div class="about-content">
+                    <h3>Hello, I'm Ujjwal Gupta</h3>
+                    <p class="lead-text">A passionate Computer Science student at IIIT Hyderabad, combining creativity with technical expertise.</p>
+                    
+                    <div class="about-details">
+                        <p>I'm currently pursuing my BTech in Computer Science and Engineering, where I'm developing innovative solutions and exploring cutting-edge technologies. With a strong foundation in programming and problem-solving, I strive to create meaningful impact through technology.</p>
+                        
+                        <div class="quick-info">
+                            <div class="info-item">
+                                <i class="fas fa-code"></i>
+                                <h4>Developer</h4>
+                                <p>Full-stack enthusiast with a passion for clean code</p>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-laptop-code"></i>
+                                <h4>Problem Solver</h4>
+                                <p>Competitive programmer with analytical mindset</p>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-lightbulb"></i>
+                                <h4>Quick Learner</h4>
+                                <p>Adaptable and eager to embrace new technologies</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="hometown" class="hometown">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Hometown - Pune</h2>
+            </div>
+            <div class="slider-container">
+                <div class="slider" id="slider">
+                    <div class="slide">
+                        <img src="pune_skyline.jpg" alt="Pune_Skyline">
+                        <div class="slide-caption">
+                            <h3>Vibrant Pune Skyline</h3>
+                            <p>Welcome to Pune - The Oxford of the East! A city where tradition meets innovation, hosting prestigious educational institutions and a thriving IT sector. As Maharashtra's cultural capital, Pune perfectly balances its rich historical heritage with modern development.</p>
+                            <div class="caption-details">
+                                <span><i class="fas fa-map-marker-alt"></i> Cultural Capital</span>
+                                <span><i class="fas fa-university"></i> Educational Hub</span>
+                                <span><i class="fas fa-laptop"></i> IT Powerhouse</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <img src="shaniwarwad.jpg" alt="Shaniwar_Wada">
+                        <div class="slide-caption">
+                            <h3>Majestic Shaniwar Wada</h3>
+                            <p>Step back in time at Shaniwar Wada, the grand fortified residence of the Peshwas. Built in 1732, this architectural marvel showcases the might of the Maratha Empire. Its imposing gates, intricate carvings, and legendary fountains tell stories of a glorious past.</p>
+                            <div class="caption-details">
+                                <span><i class="fas fa-crown"></i> Historical Palace</span>
+                                <span><i class="fas fa-monument"></i> Maratha Heritage</span>
+                                <span><i class="fas fa-calendar-alt"></i> Est. 1732</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <img src="agakhan.jpg" alt="Aga_Khan_Palace">
+                        <div class="slide-caption">
+                            <h3>Historic Aga Khan Palace</h3>
+                            <p>A symbol of India's freedom struggle, the Aga Khan Palace stands as a testament to our nation's journey to independence. This architectural gem, built in 1892, gained prominence as the place where Mahatma Gandhi and other freedom fighters were held during the Quit India Movement.</p>
+                            <div class="caption-details">
+                                <span><i class="fas fa-landmark"></i> Freedom Monument</span>
+                                <span><i class="fas fa-history"></i> Gandhi's Legacy</span>
+                                <span><i class="fas fa-archway"></i> Heritage Site</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <div class="slider-btn prev-btn" id="prev-btn">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="slider-btn next-btn" id="next-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="dots" id="slider-dots"></div>
+        </div>
+    </section>
+
+    <section id="education" class="education">
+        <div class="container">
+            <div class="section-title">
+                <h2>Education Journey</h2>
+                <p class="section-subtitle">A path of continuous learning and growth</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <img src="eurokids.jpg" alt="Eurokids" class="timeline-img">
+                        <h3>EuroKids International</h3>
+                        <p>Began my educational journey at EuroKids, where I developed fundamental learning skills through their acclaimed play-based curriculum. This early exposure to structured learning helped build a strong foundation for my academic future.</p>
+                        <div class="timeline-details">
+                            <span><i class="fas fa-calendar"></i> 2008 - 2009</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Pune, Maharashtra</span>
+                        </div>
+                        <span class="timeline-date">Early Education</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <img src="Amanora.jpg" alt="Amanora_School" class="timeline-img">
+                        <h3>Amanora School</h3>
+                        <p>At Amanora School, I experienced a holistic learning environment that fostered both academic excellence and personal growth. The school's modern infrastructure and innovative teaching methods provided an ideal setting for primary education.</p>
+                        <div class="timeline-details">
+                            <span><i class="fas fa-calendar"></i> 2009 - 2010</span>
+                            <span><i class="fas fa-graduation-cap"></i> Class 1</span>
+                        </div>
+                        <span class="timeline-date">Primary Education</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <img src="euro.jpg" alt="European_School_Karlsruhe" class="timeline-img">
+                        <h3>European School Karlsruhe</h3>
+                        <p>A transformative period in Germany that broadened my global perspective. The multicultural environment and European education system enhanced my adaptability and introduced me to diverse learning approaches. This international exposure significantly shaped my worldview.</p>
+                        <div class="timeline-details">
+                            <span><i class="fas fa-calendar"></i> 2010 - 2012</span>
+                            <span><i class="fas fa-globe-europe"></i> Karlsruhe, Germany</span>
+                        </div>
+                        <span class="timeline-date">International Education</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <img src="orbis.jpg" alt="Orbis_School" class="timeline-img">
+                        <h3>Orbis School</h3>
+                        <p>Seven formative years at Orbis School where I excelled academically and discovered my passion for technology and sciences. Participated in numerous competitions, led school projects, and developed strong leadership skills through various extracurricular activities.</p>
+                        <div class="timeline-details">
+                            <span><i class="fas fa-calendar"></i> 2012 - 2019</span>
+                            <span><i class="fas fa-award"></i> Academic Excellence</span>
+                        </div>
+                        <span class="timeline-date">Secondary Education</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <img src="jee.jpg" alt="Competitive_Exams" class="timeline-img">
+                        <h3>JEE Preparation Journey</h3>
+                        <p>An intensive period of preparation for India's premier engineering entrance exams. This phase not only honed my problem-solving abilities but also taught me invaluable lessons in persistence, time management, and strategic thinking. Formed lasting friendships with fellow aspirants.</p>
+                        <div class="timeline-details">
+                            <span><i class="fas fa-calendar"></i> 2019 - 2021</span>
+                            <span><i class="fas fa-brain"></i> Competitive Excellence</span>
+                        </div>
+                        <span class="timeline-date">Competitive Preparation</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <img src="IIIT.jpg" alt="IIIT_Hyderabad" class="timeline-img">
+                        <h3>IIIT Hyderabad</h3>
+                        <p>Currently pursuing B.Tech in Computer Science at one of India's most prestigious technical institutes. Engaging in cutting-edge research, participating in hackathons, and collaborating on innovative projects. Focusing on AI/ML, web development, and software engineering principles.</p>
+                        <div class="timeline-details">
+                            <span><i class="fas fa-calendar"></i> 2021 - Present</span>
+                            <span><i class="fas fa-code"></i> Computer Science</span>
+                        </div>
+                        <span class="timeline-date">Higher Education</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-title">
+                <h2>Technical Skills</h2>
+            </div>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <div class="skill-bar">
+                        <div class="skill-name">
+                            <span>C++</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-level">
+                            <div class="skill-percent" data-width="90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-name">
+                            <span>C</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-level">
+                            <div class="skill-percent" data-width="85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-name">
+                            <span>Python</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="skill-level">
+                            <div class="skill-percent" data-width="80%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Web Development</h3>
+                    <div class="skill-bar">
+                        <div class="skill-name">
+                            <span>HTML</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="skill-level">
+                            <div class="skill-percent" data-width="95%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-name">
+                            <span>CSS</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-level">
+                            <div class="skill-percent" data-width="85%"></div>
+                        </div>
+                    </div>
+                    <div
+    </section>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('slider');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const dots = document.getElementById('slider-dots');
+    const slides = document.querySelectorAll('.slide');
+    
+    let currentSlide = 0;
+    let autoSlideInterval;
+
+    // Create dots
+    slides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dots.appendChild(dot);
+    });
+
+    // Update dots
+    function updateDots() {
+        document.querySelectorAll('.dot').forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    }
+
+    // Go to specific slide
+    function goToSlide(index) {
+        currentSlide = index;
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        updateDots();
+        resetAutoSlide();
+    }
+
+    // Next slide
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        goToSlide(currentSlide);
+    }
+
+    // Previous slide
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        goToSlide(currentSlide);
+    }
+
+    // Auto slide
+    function startAutoSlide() {
+        autoSlideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+    }
+
+    // Reset auto slide timer
+    function resetAutoSlide() {
+        clearInterval(autoSlideInterval);
+        startAutoSlide();
+    }
+
+    // Event listeners
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    // Touch events for mobile swipe
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    slider.addEventListener('touchstart', e => {
+        touchStartX = e.touches[0].clientX;
+    });
+
+    slider.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].clientX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        const swipeThreshold = 50; // minimum distance for swipe
+        const difference = touchStartX - touchEndX;
+
+        if (Math.abs(difference) > swipeThreshold) {
+            if (difference > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+    }
+
+    // Pause auto-slide when hovering over slider
+    slider.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+    slider.addEventListener('mouseleave', startAutoSlide);
+
+    // Start auto-slide
+    startAutoSlide();
+});
+    </script>
+</body>
+</html>
