@@ -1162,5 +1162,91 @@ document.addEventListener('DOMContentLoaded', function() {
     startAutoSlide();
 });
     </script>
+    <script>
+class EventTracker {
+    constructor() {
+        this.initializeTracking();
+    }
+
+    initializeTracking() {
+        // Track all click events
+        document.addEventListener('click', (event) => {
+            const element = event.target;
+            const eventType = 'click';
+            const objectType = this.getObjectType(element);
+            this.logEvent(eventType, objectType);
+        });
+
+        // Track page views using Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const eventType = 'view';
+                    const objectType = this.getObjectType(element);
+                    this.logEvent(eventType, objectType);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        // Observe all major elements for view tracking
+        document.querySelectorAll('section, img, .gallery-item, .timeline-item, .skill-category, .nav-links li, .btn').forEach(element => {
+            observer.observe(element);
+        });
+    }
+
+    getObjectType(element) {
+        // Check for dropdown
+        if (element.tagName === 'SELECT' || element.classList.contains('dropdown')) {
+            return 'drop-down';
+        }
+        // Check for image
+        else if (element.tagName === 'IMG' || element.classList.contains('gallery-item') || 
+                 element.classList.contains('profile-img') || element.classList.contains('timeline-img')) {
+            return 'image';
+        }
+        // Check for text elements
+        else if (element.tagName === 'P' || element.tagName === 'SPAN' || 
+                 element.tagName === 'H1' || element.tagName === 'H2' || 
+                 element.tagName === 'H3' || element.tagName === 'H4') {
+            return 'text';
+        }
+        // Check for navigation links
+        else if (element.tagName === 'A' || element.closest('nav')) {
+            return 'navigation';
+        }
+        // Check for buttons
+        else if (element.tagName === 'BUTTON' || element.classList.contains('btn')) {
+            return 'button';
+        }
+        // Check for sections
+        else if (element.tagName === 'SECTION') {
+            return 'section';
+        }
+        // Check for skill bars
+        else if (element.classList.contains('skill-bar')) {
+            return 'skill-indicator';
+        }
+        // Check for timeline items
+        else if (element.classList.contains('timeline-item')) {
+            return 'timeline';
+        }
+        // Default case
+        else {
+            return 'generic-element';
+        }
+    }
+
+    logEvent(eventType, objectType) {
+        const timestamp = new Date().toISOString();
+        console.log(`${timestamp}, ${eventType}, ${objectType}`);
+    }
+}
+
+// Initialize the event tracker when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    new EventTracker();
+});
+    </script>
 </body>
 </html>
